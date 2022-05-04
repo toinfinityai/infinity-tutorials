@@ -1,0 +1,11 @@
+.ipynb_checkpoints/
+
+# Byte code / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Mac
+.DS_Store
+
+*/tmp/*
+*/test_data/*
