@@ -34,7 +34,6 @@ For convenience, we provide the parameters of the SenseFit API along with their 
     - "BICEP_CURL"
     - "BURPEE"
     - "CRUNCH"
-    - "DUMBBELL_DEADLIFT"
     - "EXPLOSIVE_PUSH_UP"
     - "HAMMER_CURL"
     - "ONE_ARM_DUMBBELL_PUSH_PRESS_LEFT"
