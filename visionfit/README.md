@@ -41,7 +41,7 @@ Below is the list of parameters you can use to control data generated with the V
     - "BURPEE"
     - "CRUNCH"
     - "DEADLIFT"
-    - "EXPLOSIVE_PUSHUP"
+    - "EXPLOSIVE_PUSH_UP"
     - "LEG_RAISE"
     - "PRESS_LEFT"
     - "PUSH_PRESS_LEFT"
@@ -78,7 +78,7 @@ Below is the list of parameters you can use to control data generated with the V
 - `relative_avatar_angle_deg`: Relative avatar rotation, in degrees, where 0 is directly facing the camera.
   - Floating point number that must be within the range of [-180.0, 180.0].
 - `frame_rate`: Output video frame rate.
-  - Integer that must be one of {24, 12, 8, 6}.
+  - Integer that must be one of {30, 24, 12, 8, 6}.
 - `image_width`: Output image/video width in pixels.
   - Integer that must be within the range of [128, 512] pixels.
 - `image_height`: Output image/video height in pixels.
@@ -88,7 +88,7 @@ An example parameterization for the VisionFit API expressed as a Python `dict`:
 
 ```python
 params_dict = {
-    "scene": "REPCOUNT_V001_BEDROOM_2_3122859",
+    "scene": "BEDROOM_2",
     "exercise": "PUSH_UP",
     "gender": "FEMALE",
     "num_reps": 1,
@@ -178,6 +178,7 @@ Instance-level annotations are provided for every unique object segmented in an 
 We also provide the following annotations for each `person` instance:
 
 * `armature_keypoints`: A data structure including image coordinates (x,y), visibility (v), depth from camera (z, in meters), and 3D position in the global coordinate system (x_global, y_global, z_global; in meters) for each degree-of-freedom in the underlying SMPL-X model. Visibility values indicate whether keypoints are not in the image frame (0), in the image frame but occluded (1), or visible (2).
+* `vertex_keypoints`: A data structure including image coordinates (x,y), visibility (v), depth from camera (z, in meters), and 3D position in the global coordinate system (x_global, y_global, z_global; in meters) for various anatomical points of interest on the SMPL-X body mesh. Points of interest include the ears and nose. Visibility labels are defined as in `armature_keypoints`.
 * `keypoints`: Image coordinates and visibility in standard COCO format for each keypoint in the 17-point COCO skeleton. Visibility labels are defined as in `armature_keypoints`. Note that the hip keypoints in this data structure correspond to different locations than those in `armature_keypoints`. Specifically, they correspond to a more lateral location designed to better reflect where human annotators typically place the hips (e.g. in the COCO dataset).
 * `num_keypoints`: Number of keypoints in the COCO skeleton with non-zero visibility.
 * `quaternions`: 3D rotations for each degree-of-freedom in the SMPL-X model, relative to its parent in the kinematic tree, in wxyz order.
