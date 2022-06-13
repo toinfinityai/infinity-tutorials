@@ -2,7 +2,7 @@
   <img src="../doc/logo.png" width="30%">
 </p>
 
-# Infinity VisionFit API
+# Infinity VisionFit API [0.3.0]
 
 <p align="center">
   <img src="../doc/visionfit_teaser.gif" width="90%">
@@ -24,80 +24,133 @@ This folder contains the following tutorial notebooks:
 
 ## Parameter Descriptions
 
-Below is the list of parameters you can use to control data generated with the VisionFit API:
+For convenience, we provide the parameters of the VisionFIt API along with their input constraints below. All parameter ranges are inclusive.
 
 - `scene`: Background environment/scene.
   - String that must be one of:
-    - "GYM_1"
-    - "BEDROOM_2"
-    - "BEDROOM_4"
-    - "BEDROOM_5"
-- `exercise`: Name of exercise used in animation. See [below](#available-exercises) for a video of each.
+    - GYM_1
+    - BEDROOM_2
+    - BEDROOM_4
+    - BEDROOM_5
+- `exercise`: Name of exercise used in the animation. Reference videos and metadata for each exercise are available [here](https://docs.google.com/spreadsheets/d/15Ofjc0dA6IDihMzQguEiB0KxwjWSnMw1moIJglRyTCk/edit#gid=0).
   - String that must be one of:
-    - "ARM_RAISE"
-    - "BACK_SQUAT"
-    - "BENT_OVER_TRICEP_KICKBACK_RIGHT"
-    - "BICEP_CURL"
-    - "BURPEE"
-    - "CRUNCH"
-    - "DEADLIFT"
-    - "EXPLOSIVE_PUSH_UP"
-    - "LEG_RAISE"
-    - "PRESS_LEFT"
-    - "PUSH_PRESS_LEFT"
-    - "PUSH_UP"
-    - "SIT_UP"
-    - "SPLIT_SQUAT_RIGHT"
-    - "SUPERMAN"
-    - "UPPERCUT_LEFT"
-    - "V_UP"
+    - ARM_RAISE-DUMBBELL
+    - BEAR_CRAWL-HOLDS
+    - BICEP_CURL-ALTERNATING-DUMBBELL
+    - BICEP_CURL-BARBELL
+    - BIRD_DOG
+    - BRIDGE
+    - BURPEE
+    - CLAMSHELL-LEFT
+    - CLAMSHELL-RIGHT
+    - CRUNCHES
+    - DEADLIFT-DUMBBELL
+    - DONKEY_KICK-LEFT
+    - DONKEY_KICK-RIGHT
+    - DOWNWARD_DOG
+    - LEG_RAISE
+    - LUNGE-CROSSBACK
+    - PRESS-SINGLE_ARM-DUMBBELL-LEFT
+    - PRESS-SINGLE_ARM-DUMBBELL-RIGHT
+    - PUSHUP
+    - PUSHUP-CLOSE_GRIP
+    - PUSHUP-EXPLOSIVE
+    - PUSH_PRESS-SINGLE_ARM-DUMBBELL-LEFT
+    - PUSH_PRESS-SINGLE_ARM-DUMBBELL-RIGHT
+    - SITUP
+    - SPLIT_SQUAT-SINGLE_ARM-DUMBBELL-LEFT
+    - SPLIT_SQUAT-SINGLE_ARM-DUMBBELL-RIGHT
+    - SQUAT-BACK-BARBELL
+    - SQUAT-BODYWEIGHT
+    - SQUAT-GOBLET+SUMO-DUMBBELL
+    - SUPERMAN
+    - TRICEP_KICKBACK-BENT_OVER+SINGLE_ARM-DUMBBELL-LEFT
+    - TRICEP_KICKBACK-BENT_OVER+SINGLE_ARM-DUMBBELL-RIGHT
+    - UPPERCUT-LEFT
+    - UPPERCUT-RIGHT
+    - V_UP
+  - Default value: PUSHUP
 - `gender`: Avatar gender.
-  - String that must be either "MALE" or "FEMALE"
+  - String that must be one of: MALE, FEMALE
+  - Default value: MALE
 - `num_reps`: Number of exercise repetitions in the returned video.
-  - Integer that must be within the range of [1, 10].
-- `seconds_per_rep`: Duration of baseline rep in seconds.
-  - Floating point number that must be within the range of [1.0, 3.0] seconds.
-- `max_rel_speed_change`: Maximum change in speed across reps in a single rep sequence, relative to the baseline speed; expressed as a fraction between 0 and 1.
-  - Floating point number that must be within the range of [0.0, 1.0].
+  - Integer in range of 1 to 20
+  - Default value: 1
+- `rel_baseline_speed`: Baseline speed of animation, relative to default (natural) speed.
+  - Float in range of 0.33 to 3.0
+  - Default value: 1.0
+- `max_rel_speed_change`: Maximum change in speed across reps in a single rep sequence, relative to the baseline speed.
+  - Float in range of 0.0 to 1.0
+  - Default value: 0.0
 - `trim_start_frac`: Fraction of seed animation (from start to midpoint) to truncate at the start.
-  - Floating point number that must be within the range of [0.0, 1.0].
-  - Combined constraint: `trim_start_frac` + `trim_end_frac` < 0.9.
+  - Float in range of 0.0 to 0.9
+  - Default value: 0.0
+  - `trim_start_frac + trim_end_frac` cannot exceed 0.9
+  - Note: this parameter is disabled for some exercises (see `allow_trim` [here](https://docs.google.com/spreadsheets/d/15Ofjc0dA6IDihMzQguEiB0KxwjWSnMw1moIJglRyTCk/edit#gid=0))
 - `trim_end_frac`: Fraction of seed animation (from start to midpoint) to truncate at the end.
-  - Floating point number that must be within the range of [0.0, 1.0].
-  - Combined constraint: `trim_start_frac` + `trim_end_frac` < 0.9.
-- `kinematic_noise_factor`: Scalar factor used to change the default kinematic noise added in generated animations.
-  - Floating point number that must be within the range of [0.0, 2.0].
-- `camera_height`: Height of viewing camera.
-  - Floating point number that must be within the range of [0.1, 2.75] meters.
+  - Float in range of 0.0 to 0.9
+  - Default value: 0.0
+  - `trim_start_frac + trim_end_frac` cannot exceed 0.9
+  - Note: this parameter is disabled for some exercises (see `allow_trim` [here](https://docs.google.com/spreadsheets/d/15Ofjc0dA6IDihMzQguEiB0KxwjWSnMw1moIJglRyTCk/edit#gid=0))
+- `kinematic_noise_factor`: Scaling factor used to adjust the amount of kinematic noise added in the simulated movement.
+  - Float in range of 0.0 to 2.0
+  - Default value: 1.0
+- `camera_distance`: Approximate distance between the camera and avatar, in meters.
+  - Float in range of 1.0 to 5.25
+  - Default value: 3.0 
+  - NOTE: The API does not currently support changing the camera distance along a fixed path when seeding a new job on a previous run.
+- `camera_height`: Height of the viewing camera, in meters.
+  - Float in range of 0.1 to 2.75
+  - Default value: 0.75
+- `avatar_identity`: Integer-based unique idenfier that controls the chosen avatar appearance.
+  - Integer in range of 0 to 24
+  - Default value: 0 
+- `relative_height`: Relative height of the avatar. Positive values result in a taller avatar. This value corresponds to the first PCA coefficient in the SMPL-X model's beta parameter.
+  - Float in range of -4.0 to 4.0
+  - Default value: 0.0 
+- `relative_weight`: Relative weight of the avatar. Positive values result in an avatar with greater weight. This value corresponds to the second PCA coefficient in the SMPL-X model's beta parameter.
+  - Float in range of -4.0 to 4.0
+  - Default value: 0.0 
 - `relative_camera_yaw_deg`: Camera yaw relative to avatar, in degrees, where 0 is directly facing the avatar.
-  - Floating point number that must be within the range of [-45.0, 45.0] degrees.
+  - Float in range of -45.0 to 45.0
+  - Default value: 0.0
 - `relative_camera_pitch_deg`: Camera pitch relative to avatar, in degrees, where 0 is directly facing the avatar.
-  - Floating point number that must be within the range of [-45.0, 45.0] degrees.
+  - Float in range of -45.0 to 45.0
+  - Default value: 0.0
 - `lighting_power`: Luminosity of the scene.
-  - Floating point number that must be within the range of [0.0, 2000.0].
+  - Float in range of 0.0 to 2000.0
+  - Default value: 100.0
 - `relative_avatar_angle_deg`: Relative avatar rotation, in degrees, where 0 is directly facing the camera.
-  - Floating point number that must be within the range of [-180.0, 180.0].
+  - Float in range of -180.0 to 180.0
+  - Default value: 0.0
 - `frame_rate`: Output video frame rate.
-  - Integer that must be one of {30, 24, 12, 8, 6}.
+  - Integer that must be one of: 30, 24, 12, 8, 6
+  - Default value: 24
 - `image_width`: Output image/video width in pixels.
-  - Integer that must be within the range of [128, 512] pixels.
+  - Integer in range of 128 to 512
+  - Default value: 256
 - `image_height`: Output image/video height in pixels.
-  - Integer that must be within the range of [128, 512] pixels.
+  - Integer in range of 128 to 512
+  - Default value: 256
 
 An example parameterization for the VisionFit API expressed as a Python `dict`:
 
 ```python
 params_dict = {
     "scene": "BEDROOM_2",
-    "exercise": "PUSH_UP",
+    "exercise": "PUSHUP",
     "gender": "FEMALE",
     "num_reps": 1,
-    "seconds_per_rep": 1.0,
+    "rel_baseline_speed": 1.2,
     "max_rel_speed_change": 0.0,
     "trim_start_frac": 0.0,
     "trim_end_frac": 0.0,
     "kinematic_noise_factor": 1.0,
+    "camera_distance": 3.3,
     "camera_height": 0.75,
+    "avatar_identity": 4,
+    "relative_height": -0.32,
+    "relative_weight": 1.48,
     "relative_camera_yaw_deg": 0.0,
     "relative_camera_pitch_deg": 0.0,
     "lighting_power": 100.0,
@@ -107,12 +160,6 @@ params_dict = {
     "image_height": 256,
 }
 ```
-
-## Available Exercises
-
-<p align="center">
-  <img src="../doc/visionfit_exercises.gif" width="100%">
-</p>
 
 ## API Outputs
 For each job, a zipped archive can be downloaded that includes the following files:
@@ -142,6 +189,7 @@ Scene-level annotations are provided for each video. They are accessible via the
 * `avatar_betas`: 10 shape coefficients for the underlying SMPL-X body model.
 * `avatar_waist_circumference`: Circumference of the SMPL-X body model's waist, in meters.
 * `avatar_location`: Location of the avatar in the global coordinate system, in meters.
+* `avatar_identity`: Integer-based unique idenfier that controls the chosen avatar appearance.
 * `camera_P_matrix`: P matrix of the synthetic camera. This can be used to project any 3D position in the global coordinate system onto the image plane. Note that `P = K @ RT`.
 * `camera_K_matrix`: Intrinsic K matrix of the synthetic camera.
 * `camera_RT_matrix`: Extrinsic RT matrix of the synthetic camera (rotation + translation).

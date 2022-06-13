@@ -2,7 +2,7 @@
   <img src="../doc/logo.png" width="30%">
 </p>
 
-# Infinity SenseFit API
+# Infinity SenseFit API [0.2.0]
 
 <p align="center">
   <img src="../doc/sensefit_teaser.gif" width="70%">
@@ -20,101 +20,124 @@ This folder contains the following tutorial notebooks:
 
 ## Parameter Description
 
-For convenience, we provide the parameters of the SenseFit API along with their input constraints below:
+For convenience, we provide the parameters of the SenseFit API along with their input constraints below. All parameter ranges are inclusive.
 
-- `num_reps`: Number of reps in the rep sequence
-  - Integer that must be within range of 1 to 10 (inclusive)
-  - Default value of 1
-- `exercise`: Name of exercise used in animation. See [below](#available-exercises) for a video of each.
+- `exercise`: Name of exercise used in the animation. Reference videos and metadata for each exercise are available [here](https://docs.google.com/spreadsheets/d/15Ofjc0dA6IDihMzQguEiB0KxwjWSnMw1moIJglRyTCk/edit#gid=703635996).
   - String that must be one of:
-    - "ARM_RAISE"
-    - "BARBELL_BACK_SQUAT"
-    - "BARBELL_BICEP_CURL"
-    - "BENT_OVER_SINGLE_ARM_DUMBBELL_TRICEP_KICKBACK_RIGHT"
-    - "BICEP_CURL"
-    - "BURPEE"
-    - "CRUNCH"
-    - "EXPLOSIVE_PUSH_UP"
-    - "HAMMER_CURL"
-    - "ONE_ARM_DUMBBELL_PUSH_PRESS_LEFT"
-    - "OVERHEAD_PRESS"
-    - "PUSH_UP"
-    - "SINGLE_ARM_DUMBBELL_PRESS_LEFT"
-    - "SINGLE_ARM_DUMBBELL_SPLIT_SQUAT_RIGHT"
-    - "SIT_UP"
-    - "UPPERCUT_LEFT"
-    - "V_UP"
-  - Required (if not using random motion)
-- `watch_location`: Wrist where device will be placed
-  - String that must be one of {"LEFT", "RIGHT"}
-  - Required
-- `crown_orientation`: Which side the watch crown should point (from first-person perspective)
-  - String that must be one of {"LEFT", "RIGHT"}
-  - Required
-- `ref_xy_rotation`: Rotation (in XY plane) of reference orientation in radians (simulates [xArbitraryZVertical](https://developer.apple.com/documentation/coremotion/cmattitudereferenceframe/1615953-xarbitraryzvertical) behavior on Apple Watch)
-  - Float in range of 0 to 2 pi
-  - Required
-- `seconds_per_rep`: Baseline speed of animation, in units of seconds per rep
-  - Float in range of 1.0 to 3.0
-  - Required (if not using random motion)
+    - ARM_RAISE-DUMBBELL
+    - BEAR_CRAWL-HOLDS
+    - BICEP_CURL-ALTERNATING-DUMBBELL
+    - BICEP_CURL-BARBELL
+    - BICEP_CURL-DUMBBELL
+    - BIRD_DOG
+    - BRIDGE
+    - BURPEE
+    - CLAMSHELL-LEFT
+    - CLAMSHELL-RIGHT
+    - CRUNCHES
+    - DEADLIFT-DUMBBELL
+    - DONKEY_KICK-LEFT
+    - DONKEY_KICK-RIGHT
+    - DOWNWARD_DOG
+    - HAMMER_CURL-DUMBBELL
+    - LUNGE-CROSSBACK
+    - OVERHEAD_PRESS-DUMBBELL
+    - PRESS-SINGLE_ARM-DUMBBELL-LEFT
+    - PRESS-SINGLE_ARM-DUMBBELL-RIGHT
+    - PUSHUP
+    - PUSHUP-CLOSE_GRIP
+    - PUSHUP-EXPLOSIVE
+    - PUSH_PRESS-SINGLE_ARM-DUMBBELL-LEFT
+    - PUSH_PRESS-SINGLE_ARM-DUMBBELL-RIGHT
+    - SITUP
+    - SPLIT_SQUAT-SINGLE_ARM-DUMBBELL-LEFT
+    - SPLIT_SQUAT-SINGLE_ARM-DUMBBELL-RIGHT
+    - SQUAT-BACK-BARBELL
+    - SQUAT-BODYWEIGHT
+    - SQUAT-GOBLET+SUMO-DUMBBELL
+    - TRICEP_KICKBACK-BENT_OVER+SINGLE_ARM-DUMBBELL-LEFT
+    - TRICEP_KICKBACK-BENT_OVER+SINGLE_ARM-DUMBBELL-RIGHT
+    - UPPERCUT-LEFT
+    - UPPERCUT-RIGHT
+    - V_UP
+  - Default value: BICEP_CURL-DUMBBELL
+- `num_reps`: Number of exercise repetitions in the returned time series data.
+  - Integer in range of 1 to 20
+  - Default value: 1
+- `watch_location`: Wrist where device will be placed.
+  - String that must be one of: LEFT, RIGHT
+  - Default value: LEFT
+- `crown_orientation`: Which side the watch crown should point (from first-person perspective).
+  - String that must be one of: LEFT, RIGHT
+  - Default value: RIGHT
+- `ref_xy_rotation`: Rotation (in XY plane) of reference orientation in radians (simulates [xArbitraryZVertical](https://developer.apple.com/documentation/coremotion/cmattitudereferenceframe/1615953-xarbitraryzvertical) behavior on Apple Watch).
+  - Float in range of 0.0 to 6.2831
+  - Default value: 0.0
+- `rel_baseline_speed`: Baseline speed of animation, relative to default (natural) speed.
+  - Float in range of 0.33 to 3.0
+  - Default value: 1.0
 - `max_rel_speed_change`: Maximum speed change introduced, relative to baseline speed.
-  - Float in range of 0 to 1
-  - Default value of 0
-- `trim_start_frac`: Fraction of seed animation (from start to midpoint) to truncate at the start
-  - Float in range of 0 to 1
-  - Default value of 0
+  - Float in range of 0.0 to 1.0
+  - Default value: 0.0
+- `trim_start_frac`: Fraction of seed animation (from start to midpoint) to truncate at the start.
+  - Float in range of 0.0 to 0.9
+  - Default value: 0.0
   - `trim_start_frac + trim_end_frac` cannot exceed 0.9
-- `trim_end_frac`: Fraction of seed animation (from start to midpoint) to truncate at the end
-  - Float in range of 0 to 1
-  - Default value of 0
+  - Note: this parameter is disabled for some exercises (see `allow_trim` [here](https://docs.google.com/spreadsheets/d/15Ofjc0dA6IDihMzQguEiB0KxwjWSnMw1moIJglRyTCk/edit#gid=703635996))
+- `trim_end_frac`: Fraction of seed animation (from start to midpoint) to truncate at the end.
+  - Float in range of 0.0 to 0.9
+  - Default value: 0.0
   - `trim_start_frac + trim_end_frac` cannot exceed 0.9
-- `kinematic_noise_factor`: Fraction used to control amount of kinematic variation between reps in a given rep sequece.
-  - Float in range of 0 to 1
-  - Default value of 1 (maximum variation)
-- `randomize_body_shape`: If True, SMPLX body shape will be randomized
+  - Note: this parameter is disabled for some exercises (see `allow_trim` [here](https://docs.google.com/spreadsheets/d/15Ofjc0dA6IDihMzQguEiB0KxwjWSnMw1moIJglRyTCk/edit#gid=703635996))
+- `kinematic_noise_factor`: Scaling factor used to adjust the amount of kinematic noise added in the simulated movement.
+  - Float in range of 0.0 to 2.0
+  - Default value: 1.0
+- `wrist_offset_deg`: Fixed rotation offset applied to supination/pronation axis of wrists, in degrees. Negative values correspond to supination.
+  - Float in range of -90.0 to 90.0 
+  - Default value: 0.0
+- `randomize_body_shape`: If True, the SMPL-X body shape will be randomized.
   - Boolean
-  - Defaults to False
-- `use_random_motion`:  If True, random motion will be used for animation (rather than exercise reps)
+  - Default value: False
+- `use_random_motion`:  If True, random motion will be used for the animation (rather than exercise repetitions).
   - Boolean
-  - Defaults to False
-- `num_random_frames`: Number of random frames to export if using random motion
-  - Integer in range of 10 to 500 (inclusive)
-  - Default value of 100
-- `frames_per_second`: Sampling rate of exported time series and video
-  - Integer that must be one of {20, 30, 40}
-  - Default value of 20
-- `image_width`: Width dimension of rendered video, in pixels
-  - Integer in range of 224 to 1024 (inclusive)
-  - Default value of 480
-- `image_height`: Height dimension of rendered video, in pixels
-  - Integer in range of 224 to 1024 (inclusive)
-  - Default value of 480
-- `random_seed`: Random seed for reproducibility
-  - Integer in the range of 0 to 2^31-1 (inclusive)
-  - If not specified, randomness in kinematic and cadence variation is not reproducible.
+  - Default value: False
+- `num_random_frames`: Number of random frames to export if using random motion.
+  - Integer in range of 10 to 500
+  - Default value: 100
+- `frames_per_second`: Sampling rate of exported time series and video.
+  - Integer that must be one of: 20, 30, 40
+  - Default value: 20
+- `image_width`: Width dimension of rendered video, in pixels.
+  - Integer in range of 224 to 1024
+  - Default value: 480
+- `image_height`: Height dimension of rendered video, in pixels.
+  - Integer in range of 224 to 1024
+  - Default value: 480
+- `random_seed`: Random seed used for reproducibility.
+  - Integer in the range of 0 to 2^31-1
+  - Default value: 100
 
 An example parameterization for the SenseFit API expressed as a Python `dict`:
 
 ```
 params_dict = {
-	"exercise": "BICEP_CURL",
+	"exercise": "BICEP_CURL-DUMBBELL",
 	"num_reps": 5,
 	"watch_location": "LEFT",
 	"crown_orientation": "RIGHT",
-	"seconds_per_rep": 2.10962378261473,
-	"max_rel_speed_change": 0.2864222237369177,
-	"trim_start_frac": 0.1792410375659265,
-	"trim_end_frac": 0.10806865443101575,
-	"ref_xy_rotation": 5.3396218455002895,
+	"rel_baseline_speed": 2.11,
+	"max_rel_speed_change": 0.28,
+	"trim_start_frac": 0.17,
+	"trim_end_frac": 0.10,
+	"kinematic_noise_factor": 0.82,
+	"wrist_offset_deg": -18.2,
+	"ref_xy_rotation": 5.30,
+	"frames_per_second": 20,
+	"randomize_body_shape": True,
 	"random_seed": 387
 }
 ```
 
-## Available Exercises
-
-<p align="center">
-  <img src="../doc/sensefit_exercises.gif" width="100%">
-</p>
 
 ## API Outputs
 For each job, a zipped archive can be downloaded that includes the following files:
