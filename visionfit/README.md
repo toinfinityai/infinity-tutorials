@@ -102,7 +102,7 @@ For convenience, we provide the parameters of the VisionFIt API along with their
 - `camera_height`: Height of the viewing camera, in meters.
   - Float in range of 0.1 to 2.75
   - Default value: 0.75
-- `avatar_identity`: Integer-based unique idenfier that controls the chosen avatar appearance.
+- `avatar_identity`: Integer-based unique idenfier that controls the chosen avatar appearance. Reference images for each identity are provided [here](https://drive.google.com/drive/folders/1HsCLh0YM_z4fM594yVQ_UKMh8zzzReyX).
   - Integer in range of 0 to 24
   - Default value: 0 
 - `relative_height`: Relative height of the avatar. Positive values result in a taller avatar. This value corresponds to the first PCA coefficient in the SMPL-X model's beta parameter.
