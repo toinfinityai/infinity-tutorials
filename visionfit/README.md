@@ -2,7 +2,7 @@
   <img src="../doc/logo.png" width="30%">
 </p>
 
-# Infinity VisionFit API [0.3.0]
+# Infinity VisionFit API [0.3.1]
 
 <p align="center">
   <img src="../doc/visionfit_teaser.gif" width="90%">

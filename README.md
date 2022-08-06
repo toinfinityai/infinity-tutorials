@@ -6,7 +6,7 @@
 
 This repo provides various tutorial notebooks and documentation for working with the synthetic data APIs developed by [Infinity AI](https://toinfinity.ai/).
 
-## VisionFit API [0.3.0]
+## VisionFit API [0.3.1]
 
 <p align="center">
   <img src="doc/visionfit_teaser.gif" width="100%">
