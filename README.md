@@ -22,6 +22,14 @@ The VisionFit API generates synthetic data for applications at the intersection 
 
 The SenseFit API generates synthetic data for applications at the intersection of on-body **sens**ing and **fit**ness, such as motion tracking data captured with IMU sensors. The API currently allows users to generate synthetic angular position data captured at the wrist (e.g. with a smart watch). Ground-truth labels include continuous, per-frame rep counts. See the [SenseFit](sensefit) folder for more information.
 
+## Spills API [0.1.0]
+
+<p align="center">
+  <img src="doc/spills_teaser.gif" width="100%">
+</p>
+
+The Spills API generates photorealistic videos of spills in various retail, industrial, and workplace environments. The API allows users to generate videos of spills with various configurations like shape, size, and color. Our pixel-perfect labels include standard object detection and localization annotations for the spill and floor, including segmentation masks and bounding boxes. See the [Spills](spills) folder for more information.
+
 ## Environment Setup
 
 The tutorial notebooks have a dependency on `infinity-tools` -- a small Python library that wraps the Infinity REST API with various convenience functions and utilities.
