@@ -2,9 +2,13 @@
   <img src="doc/logo.png" width="30%">
 </p>
 
+# DEPRECATED
+Note: this repository is no longer supported! The new recommended way of interacting with the Infinity API is via [Infinity Workflows](https://github.com/toinfinityai/infinity-workflows). This repository is preserved for archival purposes only and will most likely not work!
+
+
 # Infinity API Tutorials
 
-This repo provides various tutorial notebooks and documentation for working with the synthetic data APIs developed by [Infinity AI](https://toinfinity.ai/).
+This repo provides various tutorial notebooks and documentation for working with the synthetic data APIs developed by [Infinity AI](https://infinity.ai/).
 
 ## VisionFit API [0.3.1]
 
@@ -39,4 +43,4 @@ Utilities in `infinity-tools` include input parameter sampling/random generation
 Follow the instructions at the [infinity-tools repository](https://github.com/toinfinityai/infinity-tools) to install this package.
 
 ## Contact
-The VisionFit and SenseFit APIs are brought to you by [Infinity AI](https://toinfinity.ai/). We're a small team of dedicated engineers who specialize in generating custom synthetic datasets and built these API hoping they would be useful to people like you! Drop us a line at [info@toinfinity.ai](mailto:info@toinfinity.ai).
+The VisionFit and SenseFit APIs are brought to you by [Infinity AI](https://infinity.ai/). We're a small team of dedicated engineers who specialize in generating custom synthetic datasets and built these API hoping they would be useful to people like you! Drop us a line at [info@toinfinity.ai](mailto:info@infinity.ai).
